@@ -10,8 +10,9 @@ from scipy.interpolate import griddata
 
 
 def import_data_csv(X_path,R_path,T_path):
+    # This subrouting reads data with format .csv - though .npy is suggested .
     try:
-        X = np.array(pd.read_csv(X_path).drop('Unnamed: 0',axis=1))
+        X = np.array(pd.read_csv(X_path).drop('Unnamed: 0',axis=1)) # dropping extra column created by panda
     except:
         raise ValueError('The parameters are not in a .csv format.')
     try:
@@ -21,14 +22,15 @@ def import_data_csv(X_path,R_path,T_path):
     try:
         T = np.array(pd.read_csv(T_path).drop('Unnamed: 0',axis=1))
     except:
-        raise ValueError('The transmission values are not in a .npy format.')
+        raise ValueError('The transmission values are not in a .csv format.')
     return X,R,T
 
 
 def import_data_npy(X_path,R_path,T_path):
+    # This subrouting reads data with format .npy.
     X = np.load(X_path,allow_pickle=True)
     try:
-        X = np.load(X_path,allow_pickle=True)
+        X = np.load(X_path,allow_pickle=True) # allow_pickle allows reading dictionary
     except:
         raise ValueError('The parameters are not in a .npy format.')
     try:
@@ -43,6 +45,9 @@ def import_data_npy(X_path,R_path,T_path):
 
 
 def import_data_mat(X_path,R_path,T_path):
+    # this is for loading matrix
+    # load mat is a subroutine in scipy
+    # this is not need
     try:
         X = loadmat(X_path)
     except:
@@ -59,7 +64,7 @@ def import_data_mat(X_path,R_path,T_path):
 
 
 def X_converter(X,name):
-    """ The parameter space is a mixture of text and values, we 
+    """ Preprocess- The parameter space is a mixture of text and values, we 
     are converting them into a list of float using this code
     """
     scalers = []
@@ -68,15 +73,17 @@ def X_converter(X,name):
         try:
             x = X[:,i].astype(float)
             X[:,i] = x
-            scaler = MinMaxScaler()
-            scaler.fit(X[:,i].reshape(-1,1))
+            scaler = MinMaxScaler() # every parameter individually scaled between zero to one - MinMaxScaler - from sklearn
+            scaler.fit(X[:,i].reshape(-1,1)) # reshaping the scaler 
+
            # scaler_filename = SCALER_PATH+"/scaler_feature_"+str(i)+'_experiment_'+name+'.save'
            # joblib.dump(scaler, scaler_filename) 
-            X[:,i] = scaler.transform(X[:,i].reshape(-1,1)).reshape(len(X[:,i]))
+            X[:,i] = scaler.transform(X[:,i].reshape(-1,1)).reshape(len(X[:,i])) # the scaling is happening here 
+
             scalers.append(scaler)
         #Converting string into labels (integer)
         except:
-            le = LabelEncoder()
+            le = LabelEncoder() # treats the labels such as 's', 45 (degree incident angle)
             le.fit(X[:,i])
            # le_encoder_filename = SCALER_PATH+"/encoder_feature_"+str(i)+'_experiment_'+name+'.save'
            # joblib.dump(le, le_encoder_filename) 
@@ -103,6 +110,7 @@ def check_irregularity(X,R,T):
 
 def split_data(X_shape,split_train,split_val):
     """Building the training set, validation set and test set for the dataset"""
+    
     index_list = np.arange(0,X_shape) #All the index
     np.random.shuffle(index_list) #randomizing them
     #train_list = index_list[0:int(X_shape*split_train)] #building training set 

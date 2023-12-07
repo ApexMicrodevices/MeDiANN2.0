@@ -1,6 +1,7 @@
 
 import numpy as np
 from util import * 
+# util -different utility functions
 
 
 class DataImporter():
