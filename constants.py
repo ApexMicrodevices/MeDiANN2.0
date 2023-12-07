@@ -1,6 +1,7 @@
 import numpy as np
-DATA_PATH = '/home/apexmds/Desktop/pcm_phc_tr/Version 0.5.1/Data/output'
-STORED_EXPERIMENT_PATH = '/home/apexmds/Desktop/pcm_phc_tr/Version 0.5.1/Machine Learning Module/Old_Experiment'
+DATA_PATH = '/home/apexmds/Documents/GitHub/MeDiANN2.0/'
+STORED_EXPERIMENT_PATH = '/home/apexmds/Documents/GitHub/MeDiANN2.0/old_experiment'
+
 PARAM_PATH = 'X'
 R_PATH = 'reflection'
 T_PATH = 'transmission'

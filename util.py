@@ -193,21 +193,21 @@ def filter_X(X):
     return X[:,keep_i]
 
 
-def build_grid(data,N=NUM_SAMPLE):
-    x,h,l = data['X'][:,0],data['X'][:,1],data['X'][:,2]
-    x_min,x_max = x.min(),x.max()
-    h_min,h_max = h.min(),h.max()
-    l_min,l_max = l.min(),l.max()
-    x_space = np.linspace(x_min,x_max,N)
-    l_space = np.linspace(l_min,l_max,N)
-    h_space = np.linspace(h_min,h_max,N)
-    data_space = []
-    for x_i in x_space:
-        for l_i in l_space:
-            for h_i in h_space:
-                data_space.append([x_i,l_i,h_i])
-    data_space = np.array(data_space)
-    return data_space
+# def build_grid(data,N=NUM_SAMPLE):
+#     x,h,l = data['X'][:,0],data['X'][:,1],data['X'][:,2]
+#     x_min,x_max = x.min(),x.max()
+#     h_min,h_max = h.min(),h.max()
+#     l_min,l_max = l.min(),l.max()
+#     x_space = np.linspace(x_min,x_max,N)
+#     l_space = np.linspace(l_min,l_max,N)
+#     h_space = np.linspace(h_min,h_max,N)
+#     data_space = []
+#     for x_i in x_space:
+#         for l_i in l_space:
+#             for h_i in h_space:
+#                 data_space.append([x_i,l_i,h_i])
+#     data_space = np.array(data_space)
+#     return data_space
 
 def infere_on_grid(data_on_grid,model_baseline,model_boost=None):
     model_pred = model_baseline.predict(data_on_grid)
