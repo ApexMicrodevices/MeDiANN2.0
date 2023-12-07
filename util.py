@@ -110,19 +110,22 @@ def check_irregularity(X,R,T):
 
 def split_data(X_shape,split_train,split_val):
     """Building the training set, validation set and test set for the dataset"""
-    
+
     index_list = np.arange(0,X_shape) #All the index
-    np.random.shuffle(index_list) #randomizing them
-    #train_list = index_list[0:int(X_shape*split_train)] #building training set 
-    train_list = index_list[0:int(X_shape*split_val)]
-   #val_list = index_list[int(X_shape*split_train):int(X_shape*split_val)] #building validation set 
-    val_list = index_list[int(X_shape*split_val):] 
+    np.random.shuffle(index_list) # randomizing the data space - again
+
+    train_list = index_list[0:int(X_shape*split_train)]
+    
+    val_list = index_list[int(X_shape* split_train): int(X_shape*split_val)] 
+    
     test_list = index_list[int(X_shape*split_val):] #building test set
+
     print('Training, validation, test split is successfull! \n')
     return {'train_list':train_list,'val_list':val_list,'test_list':test_list}
 
 
 def preprocessing_block(X,R,T,name):
+    # 
     X,R,T = check_irregularity(X, R, T)
     X = filter_X(X)
     X,scalers = X_converter(X,name)
